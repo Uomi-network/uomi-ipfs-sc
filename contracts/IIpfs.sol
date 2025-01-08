@@ -6,10 +6,10 @@ pragma solidity ^0.8.28;
 /// Interface to the precompiled contract
 /// Predeployed at the address 0x0000000000000000000000000000000000000101
 /// For better understanding check the source code:
-/// code: pallets/uomi-engine/src/lib.rs
+/// code: pallets/ipfs/src/lib.rs
 interface IIpfs {
      /**
-     * @notice Calls an agent with the specified parameters.
+     * @notice Pin an agent cid with the specified nftId.
      * @param _cid The content identifier to be pinned.
      * @param _nftId The NFT identifier to be pinned.
      */
