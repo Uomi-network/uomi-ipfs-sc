@@ -33,15 +33,16 @@ contract IPFSStorage {
      // ============ Functions ============
 
 
-    function pinAgent(bytes memory _cid, uint256 _nftId) external {
+    function pinAgent(string memory _cid, uint256 _nftId) external {
         //check if the caller is the owner of the NFT
         require(
             uomiAgents.ownerOf(_nftId) == msg.sender, "IPFSStorage: caller is not the owner of the NFT"
         );
-        PRECOMPILE_ADDRESS_IPFS.pin_agent(_cid, _nftId);
+
+        PRECOMPILE_ADDRESS_IPFS.pin_agent(bytes(_cid), _nftId);
     }
 
-    function pinFile(bytes memory _cid, uint256 _durationInBlocks) external payable{
+    function pinFile(string memory _cid, uint256 _durationInBlocks) external payable{
         require(
             _durationInBlocks >= 28800, "IPFSStorage: min duration should be >= 28800"
         ); //28800 = 24h
@@ -50,7 +51,7 @@ contract IPFSStorage {
             msg.value >= _durationInBlocks * pricePerBlock, "IPFSStorage: not enough payment"
         );
 
-        PRECOMPILE_ADDRESS_IPFS.pin_file(_cid, _durationInBlocks);
+        PRECOMPILE_ADDRESS_IPFS.pin_file(bytes(_cid), _durationInBlocks);
     }
         
 
