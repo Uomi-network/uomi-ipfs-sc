@@ -9,7 +9,7 @@ pragma solidity ^0.8.28;
 /// code: pallets/uomi-engine/src/lib.rs
 interface IIpfs {
      /**
-     * @notice Calls an agent with the specified parameters.
+     * @notice Pin an agent cid with the specified nftId.
      * @param _cid The content identifier to be pinned.
      * @param _nftId The NFT identifier to be pinned.
      */
