@@ -2,15 +2,15 @@
 pragma solidity ^0.8.28;
 
 import "./IIpfs.sol";
-// import IERC721 from openzeppelin
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "./IUomiAgents.sol";
+
 
 contract IPFSStorage {
 
     // ============ Storage ============
 
     address public owner;
-    IERC721 public uomiAgents;
+    IUomiAgents public uomiAgents;
 
     // ============ Constants ============
 
@@ -24,10 +24,9 @@ contract IPFSStorage {
     // ============ Constructor ============
 
      constructor(
-        address _owner,
-        IERC721 _uomiAgents
+        IUomiAgents _uomiAgents
     ) {
-        owner = _owner;
+        owner = msg.sender;
         uomiAgents = _uomiAgents;
     }
 
@@ -46,10 +45,11 @@ contract IPFSStorage {
      * @param _nftId The ID of the NFT associated with the agent.
      *        - The caller must be the owner of the NFT.
      */
-    function pinAgent(string memory _cid, uint256 _nftId) external {
-        //check if the caller is the owner of the NFT
+    function pinAgent(string memory _cid, uint256 _nftId, address _owner) external {
+        //check that msg.sender is uomiAgents and if token exists check if the owner is the same as the owner of the NFT (if token doesn't exist it will not check the owner)
         require(
-            uomiAgents.ownerOf(_nftId) == msg.sender, "IPFSStorage: caller is not the owner of the NFT"
+            msg.sender == address(uomiAgents) && (uomiAgents.exists(_nftId) == false || uomiAgents.ownerOf(_nftId) == _owner),
+            "IPFSStorage: caller is not the owner of the NFT"
         );
 
         PRECOMPILE_ADDRESS_IPFS.pin_agent(bytes(_cid), _nftId);
