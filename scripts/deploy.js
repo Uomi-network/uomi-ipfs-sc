@@ -3,7 +3,7 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const uomiEngine = "0xe0ae768C7aB413a10d07fDe2aC841C9F63793DD4"
+  const uomiEngine = "0x687528e4BC4040DC9ADBA05C1f00aE3633faa731"
   
   const lock = await hre.ethers.deployContract("IPFSStorage", [uomiEngine]);
 
