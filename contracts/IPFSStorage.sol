@@ -45,10 +45,10 @@ contract IPFSStorage {
      * @param _nftId The ID of the NFT associated with the agent.
      *        - The caller must be the owner of the NFT.
      */
-    function pinAgent(string memory _cid, uint256 _nftId, address _owner) external {
-        //check that msg.sender is uomiAgents and if token exists check if the owner is the same as the owner of the NFT (if token doesn't exist it will not check the owner)
+    function pinAgent(string memory _cid, uint256 _nftId) external {
+       
         require(
-            msg.sender == address(uomiAgents) && (uomiAgents.exists(_nftId) == false || uomiAgents.ownerOf(_nftId) == _owner),
+            msg.sender == address(uomiAgents),
             "IPFSStorage: caller is not the owner of the NFT"
         );
 
